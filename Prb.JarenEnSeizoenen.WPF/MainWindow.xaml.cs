@@ -97,15 +97,19 @@ namespace Prb.JarenEnSeizoenen.WPF
         private void txtYear_TextChanged(object sender, TextChangedEventArgs e)
         {
             input = txtYear.Text;
-            if (IsValidInteger(input))
+            if(txtYear.IsLoaded)
             {
-                int year = int.Parse(input);
-                DisplayLeapYearText(year);
+                if (IsValidInteger(input))
+                {
+                    int year = int.Parse(input);
+                    DisplayLeapYearText(year);
+                }
+                else
+                {
+                    lblLeapYear.Content = "Geef een geldig jaartal";
+                }
             }
-            else
-            {
-                lblLeapYear.Content = "Geef een geldig jaartal";
-            }
+
         }
 
         private void btnYearMinus_Click(object sender, RoutedEventArgs e)
