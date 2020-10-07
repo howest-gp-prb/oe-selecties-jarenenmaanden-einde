@@ -85,7 +85,7 @@ namespace Prb.JarenEnSeizoenen.WPF
                 DisplayLeapYearText(year);
             }
         }
-        private void btnYearMin_Click(object sender, RoutedEventArgs e)
+        private void btnYearMinus_Click(object sender, RoutedEventArgs e)
         {
             int year;
             int.TryParse(txtYear.Text, out year);
