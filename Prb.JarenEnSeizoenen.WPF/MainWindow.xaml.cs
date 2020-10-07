@@ -20,21 +20,18 @@ namespace Prb.JarenEnSeizoenen.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        string input;
+
         public MainWindow()
         {
             InitializeComponent();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            txtYear.Text = DateTime.Now.Year.ToString();
             SeedMonths();
-            if (IsLeapYear(int.Parse(txtYear.Text)))
-                lblLeapYear.Content = txtYear.Text + " is een schrikkeljaar";
-            else
-                lblLeapYear.Content = txtYear.Text + " is GEEN schrikkeljaar";
-
-
+            txtYear.Text = DateTime.Now.Year.ToString();
         }
+
         private void SeedMonths()
         {
             cmbMonths.Items.Add("januari");
@@ -50,58 +47,75 @@ namespace Prb.JarenEnSeizoenen.WPF
             cmbMonths.Items.Add("november");
             cmbMonths.Items.Add("december");
         }
+
+
+        string GiveSeason(int numberOfMonth)
+        {
+            string season;
+            if (numberOfMonth >= 3 && numberOfMonth <= 5) season = "lente";
+            else if (numberOfMonth >= 5 && numberOfMonth <= 8) season = "zomer";
+            else if (numberOfMonth >= 9 && numberOfMonth <= 11) season = "herfst";
+            else season = "winter";
+            return season;
+        }
+
+        bool IsValidInteger(string number)
+        {
+            bool isValid;
+            try
+            {
+                int.Parse(number);
+                isValid = true;
+            }
+            catch (Exception)
+            {
+                isValid = false;
+            }
+            return isValid;
+        }
+
         bool IsLeapYear(int year)
         {
-            if (year % 4 == 0)
-            {
-                if (year % 100 == 0)
-                {
-                    if (year % 400 == 0)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
+            bool isLeapYear;
+            if (year % 400 == 0) isLeapYear = true;
+            else if (year % 100 == 0) isLeapYear = false;
+            else if (year % 4 == 0) isLeapYear = true;
+            else isLeapYear = false;
+            return isLeapYear;
+        }
+
+        int AdaptTxtYear(int number)
+        {
+            int jaar;
+
+            jaar = int.Parse(txtYear.Text);
+            jaar += number;
+            txtYear.Text = jaar.ToString();
+            return jaar;
         }
 
         private void txtYear_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtYear.IsLoaded)
+            input = txtYear.Text;
+            if (IsValidInteger(input))
             {
-                int year;
-                int.TryParse(txtYear.Text, out year);
+                int year = int.Parse(input);
                 DisplayLeapYearText(year);
             }
+            else
+            {
+                lblLeapYear.Content = "Geef een geldig jaartal";
+            }
         }
+
         private void btnYearMinus_Click(object sender, RoutedEventArgs e)
         {
-            int year;
-            int.TryParse(txtYear.Text, out year);
-            year--;
-            txtYear.Text = year.ToString();
-            DisplayLeapYearText(year);
+            if (IsValidInteger(input)) AdaptTxtYear(-1);
 
         }
         private void btnYearPlus_Click(object sender, RoutedEventArgs e)
         {
-            int year;
-            int.TryParse(txtYear.Text, out year);
-            year++;
-            txtYear.Text = year.ToString();
-            DisplayLeapYearText(year);
-
+            if (IsValidInteger(input)) AdaptTxtYear(1);
         }
         private void DisplayLeapYearText(int year)
         {
@@ -110,8 +124,9 @@ namespace Prb.JarenEnSeizoenen.WPF
             else
                 lblLeapYear.Content = year.ToString() + " is GEEN schrikkeljaar";
         }
+
         private void cmbMonths_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {            
+        {
             // meteoroligsche seizoenen
             /*
              * Lente: 1 maart t/m 31 mei
@@ -120,19 +135,15 @@ namespace Prb.JarenEnSeizoenen.WPF
              * Winter: 1 december t/m 28 februari
             */
 
-            string season = "winter";
-            int month = cmbMonths.SelectedIndex + 1;
-            if (month >= 3 && month <= 5)
-                season = "lente";
-            else if (month >= 6 && month <= 8)
-                season = "zomer";
-            else if (month >= 9 && month <= 11)
-                season = "herfst";
-
-            lblSeason.Content = cmbMonths.SelectedItem.ToString() + " valt in de "+ season;
-
+            int monthNumber;
+            string seasonFeedback = "";
+            if (cmbMonths.SelectedItem != null)
+            {
+                monthNumber = cmbMonths.SelectedIndex;
+                monthNumber++;
+                seasonFeedback = GiveSeason(monthNumber);
+            }
+            lblSeason.Content = seasonFeedback;
         }
-
-
     }
 }
