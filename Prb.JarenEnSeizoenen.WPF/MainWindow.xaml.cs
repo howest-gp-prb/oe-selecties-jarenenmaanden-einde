@@ -48,7 +48,6 @@ namespace Prb.JarenEnSeizoenen.WPF
             cmbMonths.Items.Add("december");
         }
 
-
         string GiveSeason(int numberOfMonth)
         {
             string season;
@@ -59,19 +58,13 @@ namespace Prb.JarenEnSeizoenen.WPF
             return season;
         }
 
-        bool IsValidInteger(string number)
+        bool IsValidYear(string number)
         {
-            bool isValid;
-            try
-            {
-                int.Parse(number);
-                isValid = true;
-            }
-            catch (Exception)
-            {
-                isValid = false;
-            }
-            return isValid;
+            int convertedNumber = Convert.ToInt32(number);
+
+            if (convertedNumber != 0) return true;
+
+            else return false;
         }
 
         bool IsLeapYear(int year)
@@ -99,7 +92,7 @@ namespace Prb.JarenEnSeizoenen.WPF
             input = txtYear.Text;
             if(txtYear.IsLoaded)
             {
-                if (IsValidInteger(input))
+                if (IsValidYear(input))
                 {
                     int year = int.Parse(input);
                     DisplayLeapYearText(year);
@@ -114,12 +107,12 @@ namespace Prb.JarenEnSeizoenen.WPF
 
         private void btnYearMinus_Click(object sender, RoutedEventArgs e)
         {
-            if (IsValidInteger(input)) AdaptTxtYear(-1);
+            if (IsValidYear(input)) AdaptTxtYear(-1);
 
         }
         private void btnYearPlus_Click(object sender, RoutedEventArgs e)
         {
-            if (IsValidInteger(input)) AdaptTxtYear(1);
+            if (IsValidYear(input)) AdaptTxtYear(1);
         }
         private void DisplayLeapYearText(int year)
         {
