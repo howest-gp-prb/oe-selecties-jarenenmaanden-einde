@@ -60,7 +60,11 @@ namespace Prb.JarenEnSeizoenen.WPF
 
         bool IsValidYear(string number)
         {
-            int convertedNumber = Convert.ToInt32(number);
+            int convertedNumber;
+
+            if (number.Trim() == "") number = null;
+
+            convertedNumber = Convert.ToInt32(number);
 
             if (convertedNumber != 0) return true;
 
