@@ -9,7 +9,7 @@
     <Grid>
 
         <TextBox x:Name="txtYear" TextAlignment="Center" HorizontalAlignment="Left" Height="20" Margin="67,10,0,0" TextWrapping="Wrap" Text="9999" VerticalAlignment="Top" Width="107" TextChanged="txtYear_TextChanged"/>
-        <Button x:Name="btnYearMin" Content="-" Grid.Column="1" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Width="37" Click="btnYearMin_Click"/>
+        <Button x:Name="btnYearMinus" Content="-" Grid.Column="1" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Width="37" Click="btnYearMinus_Click"/>
         <Button x:Name="btnYearPlus" Content="+" HorizontalAlignment="Left" Margin="174,10,0,0" VerticalAlignment="Top" Width="37" RenderTransformOrigin="4.631,1.65" Click="btnYearPlus_Click"/>
         <Label x:Name="lblLeapYear" Content="" HorizontalAlignment="Left" Margin="30,35,0,0" VerticalAlignment="Top" Width="181" BorderThickness="1               "/>
         <Label Content="Maand" HorizontalAlignment="Left" Margin="30,78,0,0" VerticalAlignment="Top" Width="55" Height="28"/>
